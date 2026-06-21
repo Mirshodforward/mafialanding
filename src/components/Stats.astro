@@ -1,0 +1,39 @@
+---
+import { COPY, type Lang } from "../i18n/copy";
+interface Props { lang?: Lang }
+const { lang = "uz" } = Astro.props;
+const t = COPY[lang].statsSection;
+---
+
+<section class="stats-section">
+  <div class="container">
+    <div class="stats fade-in">
+      {t.items.map((s) => (
+        <div class="stat">
+          <div class="stat-value font-display text-gold">{s.value}</div>
+          <div class="stat-label">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-section { padding: 60px 24px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 40px 24px;
+    background: linear-gradient(135deg, rgba(196, 30, 58, 0.08), rgba(212, 175, 55, 0.05));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .stat { text-align: center; }
+  .stat-value { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1; }
+  .stat-label { color: var(--text-muted); font-size: 0.9rem; margin-top: 8px; }
+
+  @media (max-width: 620px) {
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
+  }
+</style>

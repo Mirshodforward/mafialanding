@@ -1,0 +1,80 @@
+---
+import { COPY, PLAY_URL, type Lang } from "../i18n/copy";
+import Icon from "./Icon.astro";
+interface Props { lang?: Lang }
+const { lang = "uz" } = Astro.props;
+const t = COPY[lang].howSection;
+---
+
+<section id="how">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-label">{t.label}</span>
+      <h2 class="section-title">{t.title}</h2>
+      <p class="section-subtitle">{t.subtitle}</p>
+    </div>
+
+    <div class="steps">
+      {t.steps.map((s, i) => (
+        <div class="step fade-in" style={`transition-delay:${i * 90}ms;`}>
+          <div class="step-num">{i + 1}</div>
+          <h3 class="step-title">{s.title}</h3>
+          <p class="step-text">{s.text}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="how-cta fade-in">
+      <a href={PLAY_URL} class="btn-gold" target="_blank" rel="noopener"><Icon name="play" size={17} /> {COPY[lang].hero.play}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    position: relative;
+  }
+  /* connecting line behind the cards (desktop) */
+  .steps::before {
+    content: "";
+    position: absolute;
+    top: 44px; left: 16%; right: 16%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border), var(--primary), var(--border), transparent);
+    z-index: 0;
+  }
+  .step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 30px 24px;
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    transition: transform 0.25s, border-color 0.25s, opacity 0.7s, translate 0.7s;
+  }
+  .step:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.4); }
+  .step-num {
+    width: 56px; height: 56px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 800;
+    color: #fff;
+    background: var(--gradient-red);
+    box-shadow: 0 0 28px -4px rgba(196, 30, 58, 0.7);
+  }
+  .step-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+  .step-text { color: var(--text-muted); font-size: 0.96rem; line-height: 1.7; }
+
+  .how-cta { text-align: center; margin-top: 48px; }
+
+  @media (max-width: 760px) {
+    .steps { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+  }
+</style>

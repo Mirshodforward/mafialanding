@@ -1,0 +1,80 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import Roles from "../components/Roles.astro";
+import Features from "../components/Features.astro";
+import HowToPlay from "../components/HowToPlay.astro";
+import Stats from "../components/Stats.astro";
+import FAQ from "../components/FAQ.astro";
+import CTA from "../components/CTA.astro";
+import Footer from "../components/Footer.astro";
+import { COPY, PLAY_URL, BOT_URL, CHANNEL_URL } from "../i18n/copy";
+
+const lang = "uz";
+const t = COPY[lang];
+const SITE = "https://mafiaonline.uz";
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Mafia Online",
+    url: SITE,
+    inLanguage: "uz-UZ",
+    description: t.metaDescription,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    name: "Mafia Online",
+    url: SITE,
+    inLanguage: ["uz", "ru"],
+    description: t.metaDescription,
+    genre: ["Social deduction", "Party game", "Multiplayer", "Mafia"],
+    gamePlatform: ["Web browser", "Telegram"],
+    applicationCategory: "GameApplication",
+    operatingSystem: "Web, Android, iOS",
+    playMode: "MultiPlayer",
+    numberOfPlayers: { "@type": "QuantitativeValue", minValue: 4, maxValue: 20 },
+    image: `${SITE}/og-image.png`,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "UZS", availability: "https://schema.org/InStock" },
+    publisher: { "@type": "Organization", name: "Mafia Online", url: SITE, logo: `${SITE}/icon-512x512.png` },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Mafia Online",
+    url: SITE,
+    logo: `${SITE}/icon-512x512.png`,
+    sameAs: [BOT_URL, CHANNEL_URL, PLAY_URL],
+  },
+];
+---
+
+<Layout
+  title={t.htmlTitle}
+  description={t.metaDescription}
+  canonical={SITE}
+  lang="uz"
+  hreflangs={[
+    { lang: "uz", href: SITE },
+    { lang: "ru", href: `${SITE}/ru` },
+  ]}
+>
+  {schema.map((s) => (
+    <script slot="head" type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <Navbar lang="uz" />
+  <main>
+    <Hero lang="uz" />
+    <Stats lang="uz" />
+    <Roles lang="uz" />
+    <Features lang="uz" />
+    <HowToPlay lang="uz" />
+    <FAQ lang="uz" />
+    <CTA lang="uz" />
+  </main>
+  <Footer lang="uz" />
+</Layout>

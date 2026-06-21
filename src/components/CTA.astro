@@ -1,0 +1,72 @@
+---
+import { COPY, PLAY_URL, CHANNEL_URL, type Lang } from "../i18n/copy";
+import Icon from "./Icon.astro";
+interface Props { lang?: Lang }
+const { lang = "uz" } = Astro.props;
+const t = COPY[lang].cta;
+---
+
+<section class="cta-section">
+  <div class="cta-box fade-in">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <img src="/logo-mark.svg" alt="" class="cta-mark" width="72" height="72" aria-hidden="true" />
+    <h2 class="cta-title font-display">{t.title}</h2>
+    <p class="cta-text">{t.text}</p>
+    <div class="cta-buttons">
+      <a href={PLAY_URL} class="btn-gold btn-pulse" target="_blank" rel="noopener"><Icon name="play" size={17} /> {t.play}</a>
+      <a href={CHANNEL_URL} class="btn-secondary" target="_blank" rel="noopener">{t.channel}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section { padding: 90px 24px; }
+  .cta-box {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 70px 32px;
+    border-radius: 28px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(196, 30, 58, 0.18), transparent 60%),
+      linear-gradient(180deg, var(--bg-2), var(--card));
+    border: 1px solid var(--border);
+  }
+  .cta-glow {
+    position: absolute;
+    left: 50%; top: -40%;
+    width: 520px; height: 520px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.14), transparent 65%);
+    pointer-events: none;
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+  .cta-mark {
+    display: block;
+    margin: 0 auto 18px;
+    filter: drop-shadow(0 0 22px rgba(196, 30, 58, 0.5));
+    animation: float 5s ease-in-out infinite;
+  }
+  .cta-title {
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .cta-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 520px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+    position: relative;
+  }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  @media (max-width: 520px) {
+    .cta-box { padding: 50px 20px; }
+    .cta-buttons :global(.btn-gold), .cta-buttons :global(.btn-secondary) { width: 100%; justify-content: center; }
+  }
+</style>

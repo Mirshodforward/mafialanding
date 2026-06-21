@@ -1,0 +1,79 @@
+---
+import { COPY, type Lang } from "../i18n/copy";
+interface Props { lang?: Lang }
+const { lang = "uz" } = Astro.props;
+const t = COPY[lang].faqSection;
+---
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: t.items.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  })}
+/>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-label">{t.label}</span>
+      <h2 class="section-title">{t.title}</h2>
+      <p class="section-subtitle">{t.subtitle}</p>
+    </div>
+
+    <div class="faq-list">
+      {t.items.map((f, i) => (
+        <details class="faq-item fade-in" open={i === 0} style={`transition-delay:${i * 50}ms;`}>
+          <summary class="faq-q">
+            <span>{f.q}</span>
+            <span class="faq-toggle">+</span>
+          </summary>
+          <div class="faq-a">{f.a}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s, opacity 0.7s, translate 0.7s;
+  }
+  .faq-item[open] { border-color: rgba(196, 30, 58, 0.35); box-shadow: 0 8px 26px -14px rgba(196, 30, 58, 0.6); }
+  .faq-q {
+    list-style: none;
+    cursor: pointer;
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-weight: 600; font-size: 1.02rem;
+    color: var(--text);
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-q:hover { color: var(--primary); }
+  .faq-toggle {
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 1.2rem; line-height: 1;
+    color: var(--primary);
+    background: rgba(196, 30, 58, 0.1);
+    transition: transform 0.3s;
+  }
+  .faq-item[open] .faq-toggle { transform: rotate(45deg); }
+  .faq-a {
+    padding: 0 24px 20px;
+    color: var(--text-muted);
+    font-size: 0.96rem;
+    line-height: 1.75;
+  }
+</style>

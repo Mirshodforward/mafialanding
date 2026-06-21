@@ -1,0 +1,127 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  keywords?: string;
+  lang?: string;
+  ogType?: string;
+  ogImage?: string;
+  hreflangs?: { lang: string; href: string }[];
+}
+
+const {
+  title,
+  description = "Mafia Online — do'stlaringiz bilan real vaqtda o'ynaladigan onlayn Mafiya o'yini. 13 ta rol, ovozli muloqot, 4–20 o'yinchi. Telegram orqali bepul o'ynang.",
+  canonical = "https://mafiaonline.uz",
+  keywords = "Mafia Online, Mafiya o'yini, online mafia, mafiya online, Telegram mafia, mafiya o'ynash, mafia o'yini online, mafia uzbek, jonli mafiya, mafiya bot",
+  lang = "uz",
+  ogType = "website",
+  ogImage = "https://mafiaonline.uz/og-image.png",
+  hreflangs = [],
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Mafia Online" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0A0A0F" />
+    <link rel="canonical" href={canonical} />
+
+    {hreflangs.map((hl) => (
+      <link rel="alternate" hreflang={hl.lang} href={hl.href} />
+    ))}
+    {hreflangs.length > 0 && (
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={hreflangs.find((h) => h.lang === "uz")?.href || hreflangs[0].href}
+      />
+    )}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Mafia Online" />
+    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "uz_UZ"} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Scroll-reveal animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+      );
+      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+      // Navbar shrink-on-scroll
+      const nav = document.querySelector('.nav');
+      const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 24);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Smooth scroll for in-page anchors + close mobile menu
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (this: HTMLAnchorElement, e) {
+          const href = this.getAttribute('href');
+          if (!href || href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelector('.nav-links')?.classList.remove('open');
+          }
+        });
+      });
+    </script>
+
+    <style is:global>
+      @import '../styles/global.css';
+    </style>
+  </body>
+</html>

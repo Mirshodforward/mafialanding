@@ -1,0 +1,13 @@
+{
+  "name": "Mafia Online",
+  "short_name": "Mafia",
+  "description": "Onlayn Mafiya o'yini — do'stlaring bilan real vaqtda.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0F",
+  "theme_color": "#0A0A0F",
+  "icons": [
+    { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

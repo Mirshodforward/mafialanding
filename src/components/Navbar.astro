@@ -1,0 +1,135 @@
+---
+import { COPY, PLAY_URL, type Lang } from "../i18n/copy";
+import Icon from "./Icon.astro";
+interface Props { lang?: Lang }
+const { lang = "uz" } = Astro.props;
+const t = COPY[lang].nav;
+const base = lang === "ru" ? "/ru" : "";
+const altHref = lang === "ru" ? "/" : "/ru";
+const altLabel = lang === "ru" ? "UZ" : "RU";
+---
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href={base || "/"} class="brand" aria-label="Mafia Online">
+      <img src="/logo-mark.svg" alt="" class="brand-mark" width="34" height="34" />
+      <span class="brand-name font-display">MAFIA<span class="brand-on"> ONLINE</span></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#roles">{t.roles}</a>
+      <a href="#features">{t.features}</a>
+      <a href="#how">{t.how}</a>
+      <a href="#faq">{t.faq}</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href={altHref} class="lang-switch" aria-label={altLabel}>{altLabel}</a>
+      <a href={PLAY_URL} class="btn-primary nav-play" target="_blank" rel="noopener">
+        <Icon name="play" size={15} /> <span class="nav-play-label">{t.play}</span>
+      </a>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const burger = document.getElementById("burger");
+  const links = document.getElementById("navLinks");
+  burger?.addEventListener("click", () => links?.classList.toggle("open"));
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    padding: 16px 24px;
+    transition: background 0.3s, backdrop-filter 0.3s, padding 0.3s, border-color 0.3s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(10, 10, 15, 0.82);
+    backdrop-filter: blur(14px);
+    border-bottom-color: var(--border-light);
+    padding: 10px 24px;
+  }
+  .nav-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-mark { filter: drop-shadow(0 2px 8px rgba(196, 30, 58, 0.5)); }
+  .brand-name { font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; }
+  .brand-on { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 28px; margin-left: auto; }
+  .nav-links a {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 0; height: 2px;
+    background: var(--gradient);
+    transition: width 0.25s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .lang-switch {
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.8rem; font-weight: 700;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .lang-switch:hover { color: var(--text); border-color: var(--primary); }
+  .nav-play { padding: 11px 22px; font-size: 0.92rem; box-shadow: 0 6px 20px rgba(196, 30, 58, 0.3); }
+
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 6px;
+  }
+  .burger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+  @media (max-width: 900px) {
+    .nav-links {
+      position: fixed;
+      inset: 64px 0 auto 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(10, 10, 15, 0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 8px 24px 20px;
+      transform: translateY(-12px);
+      opacity: 0; pointer-events: none;
+      transition: 0.25s;
+    }
+    .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--border-light); }
+    .burger { display: flex; }
+    .nav-play span { display: none; }
+  }
+  @media (max-width: 480px) {
+    .nav-play { padding: 10px 16px; }
+    .brand-on { display: none; }
+  }
+</style>
