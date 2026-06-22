@@ -1,0 +1,22 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BlogIndexView from "../../components/BlogIndexView.astro";
+import { BLOG_UI, abs, blogIndexPath, blogHreflangs, indexKeywords, indexSchema } from "../../i18n/blog";
+
+const lang = "uz";
+const ui = BLOG_UI[lang];
+---
+
+<Layout
+  title={ui.metaIndexTitle}
+  description={ui.metaIndexDesc}
+  keywords={indexKeywords(lang)}
+  canonical={abs(blogIndexPath(lang))}
+  lang={lang}
+  hreflangs={blogHreflangs()}
+>
+  {indexSchema(lang).map((s) => (
+    <script slot="head" type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+  <BlogIndexView lang={lang} />
+</Layout>

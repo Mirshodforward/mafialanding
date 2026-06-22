@@ -1,0 +1,75 @@
+---
+// Renders a post body (array of content blocks) as styled prose.
+import type { Block } from "../i18n/blog";
+interface Props { blocks: Block[] }
+const { blocks } = Astro.props;
+---
+
+<div class="prose">
+  {blocks.map((b) =>
+    "h2" in b ? (
+      <h2>{b.h2}</h2>
+    ) : "h3" in b ? (
+      <h3>{b.h3}</h3>
+    ) : "ul" in b ? (
+      <ul>{b.ul.map((li) => <li>{li}</li>)}</ul>
+    ) : "quote" in b ? (
+      <blockquote>{b.quote}</blockquote>
+    ) : (
+      <p>{b.p}</p>
+    )
+  )}
+</div>
+
+<style>
+  .prose { color: var(--text-muted); font-size: 1.08rem; line-height: 1.85; }
+  .prose > * + * { margin-top: 1.15em; }
+
+  .prose h2 {
+    font-family: var(--font-display);
+    color: var(--text);
+    font-size: clamp(1.35rem, 3vw, 1.7rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-top: 2em;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent, var(--primary));
+  }
+  .prose h3 {
+    color: var(--text);
+    font-size: 1.18rem;
+    font-weight: 700;
+    margin-top: 1.6em;
+  }
+  .prose p { color: var(--text-muted); }
+  .prose strong { color: var(--text); }
+
+  .prose ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .prose li {
+    position: relative;
+    padding-left: 30px;
+    color: var(--text-muted);
+  }
+  .prose li::before {
+    content: "";
+    position: absolute;
+    left: 6px; top: 0.62em;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent, var(--primary));
+    box-shadow: 0 0 10px var(--accent, var(--primary));
+  }
+
+  .prose blockquote {
+    margin-top: 2em;
+    padding: 22px 26px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--gold);
+    background: rgba(212, 175, 55, 0.05);
+    color: var(--text);
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.7;
+  }
+</style>

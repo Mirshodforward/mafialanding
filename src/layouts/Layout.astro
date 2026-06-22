@@ -14,7 +14,7 @@ const {
   title,
   description = "Mafia Online — do'stlaringiz bilan real vaqtda o'ynaladigan onlayn Mafiya o'yini. 13 ta rol, ovozli muloqot, 4–20 o'yinchi. Telegram orqali bepul o'ynang.",
   canonical = "https://mafiaonline.uz",
-  keywords = "Mafia Online, Mafiya o'yini, online mafia, mafiya online, Telegram mafia, mafiya o'ynash, mafia o'yini online, mafia uzbek, jonli mafiya, mafiya bot",
+  keywords = "Mafia Online, Mafiya o'yini, online mafia, mafiya online, video chat mafiya, Telegram mafia, mafiya o'ynash, mafia o'yini online, mafia uzbek, jonli mafiya, mafiya bot, мафия онлайн, mafia online game",
   lang = "uz",
   ogType = "website",
   ogImage = "https://mafiaonline.uz/og-image.png",
@@ -54,7 +54,7 @@ const {
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Mafia Online" />
-    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "uz_UZ"} />
+    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : lang === "en" ? "en_US" : "uz_UZ"} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -63,7 +63,6 @@ const {
     <meta name="twitter:image" content={ogImage} />
 
     <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

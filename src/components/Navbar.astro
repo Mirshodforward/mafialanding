@@ -12,7 +12,7 @@ const altLabel = lang === "ru" ? "UZ" : "RU";
 <header class="nav">
   <div class="nav-inner">
     <a href={base || "/"} class="brand" aria-label="Mafia Online">
-      <img src="/logo-mark.svg" alt="" class="brand-mark" width="34" height="34" />
+      <img src="/logo.png" alt="" class="brand-mark" width="39" height="40" />
       <span class="brand-name font-display">MAFIA<span class="brand-on"> ONLINE</span></span>
     </a>
 
@@ -21,6 +21,7 @@ const altLabel = lang === "ru" ? "UZ" : "RU";
       <a href="#features">{t.features}</a>
       <a href="#how">{t.how}</a>
       <a href="#faq">{t.faq}</a>
+      <a href={`${base}/blog`}>{t.blog}</a>
     </nav>
 
     <div class="nav-actions">
@@ -64,7 +65,7 @@ const altLabel = lang === "ru" ? "UZ" : "RU";
     gap: 20px;
   }
   .brand { display: flex; align-items: center; gap: 10px; }
-  .brand-mark { filter: drop-shadow(0 2px 8px rgba(196, 30, 58, 0.5)); }
+  .brand-mark { height: 40px; width: auto; filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.45)); }
   .brand-name { font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; }
   .brand-on { color: var(--gold); }
 

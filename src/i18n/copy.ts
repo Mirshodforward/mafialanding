@@ -73,7 +73,7 @@ export const ROLES: Role[] = [
     ru: { name: "Мирный житель", desc: "Днём через обсуждение и голосование пытается вычислить мафию." } },
 ];
 
-interface NavCopy { roles: string; features: string; how: string; faq: string; play: string }
+interface NavCopy { roles: string; features: string; how: string; faq: string; blog: string; play: string }
 interface Feature { icon: IconName; title: string; text: string }
 interface Step { title: string; text: string }
 interface Stat { value: string; label: string }
@@ -82,6 +82,7 @@ interface FaqItem { q: string; a: string }
 export interface Copy {
   htmlTitle: string;
   metaDescription: string;
+  keywords: string;
   nav: NavCopy;
   hero: {
     badge: string;
@@ -107,8 +108,10 @@ export const COPY: Record<Lang, Copy> = {
   uz: {
     htmlTitle: "Mafia Online — Onlayn Mafiya o'yini | Bepul o'ynang",
     metaDescription:
-      "Mafia Online — do'stlaringiz bilan real vaqtda o'ynaladigan onlayn Mafiya o'yini. 13 ta noyob rol, ovozli muloqot, 4–20 o'yinchi. Telegram orqali bepul, ro'yxatdan o'tmasdan o'ynang.",
-    nav: { roles: "Rollar", features: "Imkoniyatlar", how: "Qanday o'ynash", faq: "Savollar", play: "O'ynash" },
+      "Mafia Online — do'stlaringiz bilan real vaqtda o'ynaladigan onlayn Mafiya o'yini. 13 ta noyob rol, ovozli va video chat, 4–20 o'yinchi. Telegram orqali bepul, ro'yxatdan o'tmasdan o'ynang.",
+    keywords:
+      "mafia online, mafia online o'yini, mafia online o'yna, mafiya online, mafiya onlayn, mafia online game, mafia online uzbek, mafiya o'yini, mafiya o'yini qanday o'ynaladi, mafiya o'yini qoidalari, mafiya o'yini rollar, 13 rollar mafiya o'yini, mafiyada don roli, video chat orqali mafiya, video chat mafiya o'yini, kamera orqali mafiya o'yna, vebkamera mafiya online, mafiya video qo'ng'iroq bilan, onlayn mafiya o'yini o'zbek, multiplayer mafiya o'yini, do'stlar bilan onlayn mafiya, party game onlayn o'zbek, ijtimoiy o'yin onlayn, psixologik o'yin onlayn, blef o'yini online, mafiya online telefonda, mafiya o'yini ilovasi, mafiya o'yini brauzerda, mafiya online ro'yxatdan o'tmasdan, o'zbek tilida mafiya o'yini, o'zbekcha mafiya, mafiya o'yini O'zbekiston, mafiya online Toshkent, mafia uz, мафия онлайн, мафия игра онлайн, мафия видеочат, мафия с друзьями онлайн, мафия играть бесплатно, mafia online free, play mafia online free, mafia game with friends video, online mafia party game, mafia social deduction game, real-time mafia video chat, mafia game with video call, how to play mafia online with friends",
+    nav: { roles: "Rollar", features: "Imkoniyatlar", how: "Qanday o'ynash", faq: "Savollar", blog: "Blog", play: "O'ynash" },
     hero: {
       badge: "Jonli onlayn Mafiya",
       titleA: "Tun keldi.",
@@ -191,8 +194,10 @@ export const COPY: Record<Lang, Copy> = {
   ru: {
     htmlTitle: "Mafia Online — Онлайн игра Мафия | Играть бесплатно",
     metaDescription:
-      "Mafia Online — онлайн игра Мафия в реальном времени с друзьями. 13 уникальных ролей, голосовой чат, от 4 до 20 игроков. Играйте бесплатно через Telegram, без регистрации.",
-    nav: { roles: "Роли", features: "Возможности", how: "Как играть", faq: "Вопросы", play: "Играть" },
+      "Mafia Online — онлайн игра Мафия в реальном времени с друзьями. 13 уникальных ролей, голосовой и видеочат, от 4 до 20 игроков. Играйте бесплатно через Telegram, без регистрации.",
+    keywords:
+      "мафия онлайн, мафия игра онлайн, мафия онлайн играть, мафия играть бесплатно, мафия видеочат, мафия с веб-камерой, мафия с видеозвонком онлайн, онлайн игра мафия с видео, мафия с друзьями онлайн, правила игры мафия онлайн, роли в мафии онлайн, как играть в мафию онлайн, как играть в мафию онлайн с вебкамерой, где поиграть в мафию онлайн бесплатно, мафия онлайн без регистрации, мафия онлайн без скачивания, мафия мобильная версия, мафия онлайн приложение, психологическая игра онлайн, игра на логику онлайн, мафия на узбекском языке, мафия СНГ онлайн, мафия Узбекистан, mafia online, mafia online game, mafiya online, mafiya o'yini, mafia uz, video chat orqali mafiya, do'stlar bilan onlayn mafiya, mafia online free, play mafia online free, mafia game with friends video, real-time mafia video chat, mafia game with video call, mafia social deduction game, online mafia party game",
+    nav: { roles: "Роли", features: "Возможности", how: "Как играть", faq: "Вопросы", blog: "Блог", play: "Играть" },
     hero: {
       badge: "Живая онлайн Мафия",
       titleA: "Ночь пришла.",

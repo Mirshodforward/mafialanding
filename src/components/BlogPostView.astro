@@ -1,0 +1,107 @@
+---
+import { BLOG_UI, POSTS, blogIndexPath, homePath, type BlogLang, type BlogPost } from "../i18n/blog";
+import BlogHeader from "./BlogHeader.astro";
+import BlogFooter from "./BlogFooter.astro";
+import BlogBody from "./BlogBody.astro";
+import BlogCard from "./BlogCard.astro";
+import BlogCTA from "./BlogCTA.astro";
+
+interface Props { lang: BlogLang; post: BlogPost }
+const { lang, post } = Astro.props;
+const ui = BLOG_UI[lang];
+const c = post[lang];
+
+// Locale-safe date format (Node Intl lacks full uz data) — "12 June 2026".
+const MONTHS: Record<BlogLang, string[]> = {
+  uz: ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"],
+  ru: ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+};
+const d = new Date(post.date);
+const dateLabel = `${d.getUTCDate()} ${MONTHS[lang][d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+
+const related = POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
+---
+
+<BlogHeader lang={lang} slug={post.slug} />
+
+<main class="post">
+  <article class="post-inner" style={`--accent:${post.accent};`}>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={homePath(lang)}>{ui.nav.home}</a>
+      <span>/</span>
+      <a href={blogIndexPath(lang)}>{ui.nav.blog}</a>
+    </nav>
+
+    <span class="post-tag">{post.tag[lang]}</span>
+    <h1 class="post-title font-display">{c.title}</h1>
+
+    <div class="post-meta">
+      <span>{ui.published} {dateLabel}</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>{post.readMins} {ui.minRead}</span>
+    </div>
+
+    <p class="post-lead">{c.excerpt}</p>
+
+    <BlogBody blocks={c.body} />
+  </article>
+
+  <BlogCTA lang={lang} />
+
+  <section class="related container">
+    <h2 class="related-title font-display">{ui.related}</h2>
+    <div class="related-grid">
+      {related.map((p, i) => <BlogCard post={p} lang={lang} index={i} />)}
+    </div>
+    <a href={blogIndexPath(lang)} class="related-all">← {ui.backToBlog}</a>
+  </section>
+</main>
+
+<BlogFooter lang={lang} />
+
+<style>
+  .post-inner { max-width: 760px; margin: 0 auto; padding: 46px 24px 10px; }
+
+  .crumbs { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 26px; }
+  .crumbs a { color: var(--text-muted); transition: color 0.2s; }
+  .crumbs a:hover { color: var(--accent); }
+
+  .post-tag {
+    display: inline-block;
+    font-size: 0.74rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--accent);
+    padding: 5px 13px;
+    border-radius: 50px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+    margin-bottom: 18px;
+  }
+  .post-title {
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    font-weight: 900;
+    line-height: 1.18;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .post-meta { display: flex; align-items: center; gap: 12px; color: var(--text-dim); font-size: 0.9rem; margin-bottom: 30px; }
+  .post-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-dim); }
+
+  .post-lead {
+    font-size: 1.22rem;
+    line-height: 1.7;
+    color: var(--text);
+    padding-bottom: 26px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .related { padding: 50px 24px 10px; }
+  .related-title { font-size: 1.5rem; font-weight: 800; text-align: center; margin-bottom: 28px; color: var(--text); }
+  .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .related-all { display: block; text-align: center; margin-top: 34px; color: var(--text-muted); font-weight: 600; transition: color 0.2s; }
+  .related-all:hover { color: var(--text); }
+
+  @media (max-width: 860px) { .related-grid { grid-template-columns: 1fr; } }
+</style>

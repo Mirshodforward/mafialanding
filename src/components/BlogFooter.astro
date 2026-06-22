@@ -1,0 +1,45 @@
+---
+import { BLOG_UI, blogIndexPath, homePath, type BlogLang } from "../i18n/blog";
+import { PLAY_URL, CHANNEL_URL } from "../i18n/copy";
+interface Props { lang: BlogLang }
+const { lang } = Astro.props;
+const ui = BLOG_UI[lang];
+const year = new Date().getFullYear();
+---
+
+<footer class="bfoot">
+  <div class="bfoot-inner">
+    <a href={homePath(lang)} class="bfoot-brand">
+      <img src="/logo.png" alt="" width="34" height="35" />
+      <span class="font-display">MAFIA <span class="text-gold">ONLINE</span></span>
+    </a>
+    <p class="bfoot-tag">{ui.tagline}</p>
+    <nav class="bfoot-links">
+      <a href={homePath(lang)}>{ui.nav.home}</a>
+      <a href={blogIndexPath(lang)}>{ui.nav.blog}</a>
+      <a href={PLAY_URL} target="_blank" rel="noopener">{ui.nav.play} ↗</a>
+      <a href={CHANNEL_URL} target="_blank" rel="noopener">Telegram ↗</a>
+    </nav>
+    <span class="bfoot-copy">© {year} Mafia Online. {ui.rights}</span>
+  </div>
+</footer>
+
+<style>
+  .bfoot { border-top: 1px solid var(--border-light); background: var(--bg-2); padding: 48px 24px; margin-top: 40px; }
+  .bfoot-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+  .bfoot-brand { display: inline-flex; align-items: center; gap: 10px; font-size: 1.15rem; font-weight: 800; letter-spacing: 1px; }
+  .bfoot-brand img { height: 35px; width: auto; }
+  .bfoot-tag { color: var(--text-muted); font-size: 0.95rem; max-width: 420px; line-height: 1.7; }
+  .bfoot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; margin-top: 4px; }
+  .bfoot-links a { color: var(--text-muted); font-size: 0.92rem; transition: color 0.2s; }
+  .bfoot-links a:hover { color: var(--text); }
+  .bfoot-copy { color: var(--text-dim); font-size: 0.85rem; margin-top: 6px; }
+</style>

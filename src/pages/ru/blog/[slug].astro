@@ -1,0 +1,28 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import BlogPostView from "../../../components/BlogPostView.astro";
+import { POSTS, abs, postPath, blogHreflangs, postSchema, type BlogPost } from "../../../i18n/blog";
+
+export function getStaticPaths() {
+  return POSTS.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const lang = "ru";
+const { post } = Astro.props as { post: BlogPost };
+const c = post[lang];
+---
+
+<Layout
+  title={`${c.title} | Mafia Online`}
+  description={c.description}
+  keywords={c.keywords}
+  canonical={abs(postPath(lang, post.slug))}
+  lang={lang}
+  ogType="article"
+  hreflangs={blogHreflangs(post.slug)}
+>
+  {postSchema(lang, post).map((s) => (
+    <script slot="head" type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+  <BlogPostView lang={lang} post={post} />
+</Layout>
