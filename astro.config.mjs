@@ -14,6 +14,7 @@ export default defineConfig({
         locales: {
           uz: 'uz-UZ',
           ru: 'ru-RU',
+          en: 'en-US',
         },
       },
       changefreq: 'weekly',

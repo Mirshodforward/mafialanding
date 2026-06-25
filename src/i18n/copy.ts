@@ -24,6 +24,8 @@ export const TEAM_LABEL: Record<Lang, Record<Team, string>> = {
 
 export interface Role {
   icon: IconName;
+  /** Base filename of the role's card art in src/assets/rollar (no extension). */
+  img?: string;
   color: string;
   team: Team;
   uz: { name: string; desc: string };
@@ -32,43 +34,43 @@ export interface Role {
 
 // 13 roles — names/colours/descriptions sourced from the live game (src/constants/roles.ts).
 export const ROLES: Role[] = [
-  { icon: "crown", color: "#D4AF37", team: "MAFIA",
+  { icon: "crown", img: "don", color: "#D4AF37", team: "MAFIA",
     uz: { name: "Don", desc: "Mafiya boshlig'i. Kechasi oila bilan qurbon tanlaydi va hukm ijro etadi." },
     ru: { name: "Дон", desc: "Глава мафии. Ночью вместе с семьёй выбирает жертву и приводит приговор в исполнение." } },
-  { icon: "crosshair", color: "#C41E3A", team: "MAFIA",
+  { icon: "crosshair", img: "mafia", color: "#C41E3A", team: "MAFIA",
     uz: { name: "Mafiya", desc: "Oila a'zosi. Kechasi birga qurbon tanlaydi. Don o'lsa, yangi Don bo'ladi." },
     ru: { name: "Мафия", desc: "Член семьи. Ночью выбирает жертву вместе со всеми. Если Дон убит — становится новым Доном." } },
-  { icon: "search", color: "#2563EB", team: "CIVIL",
+  { icon: "search", img: "komissar", color: "#2563EB", team: "CIVIL",
     uz: { name: "Komissar Katani", desc: "Kechasi o'yinchini tekshiradi yoki o'ldiradi — shaharning bosh himoyachisi." },
     ru: { name: "Комиссар Катани", desc: "Ночью проверяет роль игрока или убивает его — главный защитник города." } },
-  { icon: "shield", color: "#3B82F6", team: "CIVIL",
+  { icon: "shield", img: "serjant", color: "#3B82F6", team: "CIVIL",
     uz: { name: "Serjant", desc: "Komissar tekshiruvlaridan xabardor. Komissar o'lsa, uning o'rnini egallaydi." },
     ru: { name: "Сержант", desc: "Знает о проверках комиссара. Если комиссар погибает — занимает его место." } },
-  { icon: "cross", color: "#16A34A", team: "CIVIL",
+  { icon: "cross", img: "shifokor", color: "#16A34A", team: "CIVIL",
     uz: { name: "Shifokor", desc: "Kechasi bir o'yinchini hujumdan qutqaradi. Bir marta o'zini ham asray oladi." },
     ru: { name: "Доктор", desc: "Ночью спасает одного игрока от атаки. Один раз может спасти себя." } },
-  { icon: "sword", color: "#9333EA", team: "NEUTRAL",
+  { icon: "sword", img: "qotil", color: "#9333EA", team: "NEUTRAL",
     uz: { name: "Qotil (Manyak)", desc: "Har kecha birini o'ldiradi. Maqsadi — hammani yo'q qilib, yolg'iz g'olib bo'lish." },
     ru: { name: "Маньяк", desc: "Каждую ночь убивает одного. Цель — уничтожить всех и победить в одиночку." } },
-  { icon: "heart", color: "#EC4899", team: "CIVIL",
+  { icon: "heart", img: "mashuqa", color: "#EC4899", team: "CIVIL",
     uz: { name: "Ma'shuqa", desc: "Istalgan o'yinchini bir kechaga chalg'itadi — u kecha va kunduzi befarq qoladi." },
     ru: { name: "Любовница", desc: "Отвлекает любого игрока на ночь — он бездействует ночь и следующий день." } },
-  { icon: "scales", color: "#F59E0B", team: "CIVIL",
+  { icon: "scales", img: "advokat", color: "#F59E0B", team: "CIVIL",
     uz: { name: "Advokat", desc: "Mijozini tanlaydi: Komissar uni tekshirsa, 'Tinch aholi' deb ko'rsatadi." },
     ru: { name: "Адвокат", desc: "Выбирает клиента: если комиссар проверит его — увидит «Мирный»." } },
-  { icon: "eye", color: "#A16207", team: "CIVIL",
+  { icon: "eye", img: "daydi", color: "#A16207", team: "CIVIL",
     uz: { name: "Daydi", desc: "Tun bo'yi shahar kezadi va kim kimga borganini ko'radi — tirik guvoh." },
     ru: { name: "Бомж", desc: "Всю ночь бродит по городу и видит, кто к кому приходил — живой свидетель." } },
-  { icon: "dice", color: "#84CC16", team: "CIVIL",
+  { icon: "dice", img: "omadli", color: "#84CC16", team: "CIVIL",
     uz: { name: "Omadli", desc: "Omadi baland aholi — hujumga uchraganda 50% omon qolish imkoniyati bor." },
     ru: { name: "Счастливчик", desc: "Везучий житель — при атаке с шансом 50% остаётся в живых." } },
-  { icon: "bomb", color: "#F97316", team: "CIVIL",
+  { icon: "bomb", img: "kamikaze", color: "#F97316", team: "CIVIL",
     uz: { name: "Kamikaze", desc: "Linchda osilsa, o'zi bilan birga yana bir o'yinchini qabristonga olib ketadi." },
     ru: { name: "Камикадзе", desc: "Если его линчуют, забирает с собой на тот свет ещё одного игрока." } },
-  { icon: "skull", color: "#A1A1AA", team: "NEUTRAL",
+  { icon: "skull", img: "suidsid", color: "#A1A1AA", team: "NEUTRAL",
     uz: { name: "Suitsid", desc: "Faqat kunduzgi ovoz berishda linch qilinsa g'olib. Kechasi o'lsa — yutqazadi." },
     ru: { name: "Самоубийца", desc: "Побеждает, только если его линчуют днём. Умрёт ночью — проигрывает." } },
-  { icon: "user", color: "#94A3B8", team: "CIVIL",
+  { icon: "user", img: "tinchaholi", color: "#94A3B8", team: "CIVIL",
     uz: { name: "Tinch aholi", desc: "Kunduzi muhokama va ovoz berish orqali mafiyani fosh qilishga harakat qiladi." },
     ru: { name: "Мирный житель", desc: "Днём через обсуждение и голосование пытается вычислить мафию." } },
 ];
