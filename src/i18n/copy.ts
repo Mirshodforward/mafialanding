@@ -9,6 +9,9 @@ export type Lang = "uz" | "ru";
 export const PLAY_URL = "https://game.mafiaonline.uz";
 export const BOT_URL = "https://t.me/MafiaOnlaynBot";
 export const CHANNEL_URL = "https://t.me/MafiyaOnlaynUz";
+export const SUPPORT_EMAIL = "support@mafiaonline.uz";
+export const SUPPORT_TG = "@StarsPaymeeSupport";
+export const SUPPORT_TG_URL = "https://t.me/StarsPaymeeSupport";
 
 /** Team accent colours (mirror the in-game palette). */
 export type Team = "MAFIA" | "CIVIL" | "NEUTRAL";
@@ -103,7 +106,7 @@ export interface Copy {
   statsSection: { items: Stat[] };
   faqSection: { label: string; title: string; subtitle: string; items: FaqItem[] };
   cta: { title: string; text: string; play: string; channel: string };
-  footer: { tagline: string; product: string; community: string; rights: string; play: string; bot: string; channel: string };
+  footer: { tagline: string; product: string; community: string; info: string; rights: string; play: string; bot: string; channel: string; about: string; contact: string; privacy: string; terms: string };
 }
 
 export const COPY: Record<Lang, Copy> = {
@@ -157,10 +160,10 @@ export const COPY: Record<Lang, Copy> = {
     },
     statsSection: {
       items: [
-        { value: "13", label: "noyob rol" },
-        { value: "4–20", label: "o'yinchi" },
-        { value: "100%", label: "bepul" },
-        { value: "24/7", label: "onlayn o'yinlar" },
+        { value: "1000+", label: "o'yinchi" },
+        { value: "500+", label: "o'ynalgan partiya" },
+        { value: "200+", label: "yaratilgan xona" },
+        { value: "150", label: "hozir onlayn" },
       ],
     },
     faqSection: {
@@ -186,10 +189,15 @@ export const COPY: Record<Lang, Copy> = {
       tagline: "Do'stlaring bilan o'ynaladigan jonli onlayn Mafiya o'yini.",
       product: "Mahsulot",
       community: "Hamjamiyat",
+      info: "Ma'lumot",
       rights: "Barcha huquqlar himoyalangan.",
       play: "O'ynash",
       bot: "Telegram bot",
       channel: "Telegram kanal",
+      about: "Biz haqimizda",
+      contact: "Aloqa",
+      privacy: "Maxfiylik siyosati",
+      terms: "Foydalanish shartlari",
     },
   },
 
@@ -243,10 +251,10 @@ export const COPY: Record<Lang, Copy> = {
     },
     statsSection: {
       items: [
-        { value: "13", label: "уникальных ролей" },
-        { value: "4–20", label: "игроков" },
-        { value: "100%", label: "бесплатно" },
-        { value: "24/7", label: "игры онлайн" },
+        { value: "1000+", label: "игроков" },
+        { value: "500+", label: "сыгранных партий" },
+        { value: "200+", label: "созданных комнат" },
+        { value: "150", label: "сейчас онлайн" },
       ],
     },
     faqSection: {
@@ -272,10 +280,15 @@ export const COPY: Record<Lang, Copy> = {
       tagline: "Живая онлайн игра Мафия для игры с друзьями.",
       product: "Продукт",
       community: "Сообщество",
+      info: "Информация",
       rights: "Все права защищены.",
       play: "Играть",
       bot: "Telegram бот",
       channel: "Telegram канал",
+      about: "О нас",
+      contact: "Контакты",
+      privacy: "Политика конфиденциальности",
+      terms: "Условия использования",
     },
   },
 };

@@ -1,0 +1,84 @@
+# Mafia Online — Full Reference
+
+> Mafia Online (mafiaonline.uz) is a free, real-time online Mafia (social deduction) game played in the browser and inside Telegram. A room holds 4–20 players across 13 unique roles, with live voice and video chat, no download and no registration. The game runs at game.mafiaonline.uz; mafiaonline.uz is the official landing, blog and knowledge hub. Languages: Uzbek (primary), Russian, English.
+
+## What Mafia is
+
+Mafia is a social deduction party game invented in 1986 by Dmitry Davydov, a psychology student at Moscow State University. Players are secretly split into an informed minority (the Mafia, who know each other) and an uninformed majority (the Town, who do not know anyone's role). It is also known internationally as "Werewolf". The game is a contest of persuasion, bluffing, logic and reading people — not of chance.
+
+## How a game works
+
+A game runs as a repeating cycle of two phases:
+
+- **Night phase**: the town "sleeps". The Mafia secretly agree on one victim. Special roles act in secret — the Detective investigates or shoots, the Doctor protects someone, the Maniac kills, and so on.
+- **Day phase**: the results of the night are announced, then everyone discusses. Players accuse, defend, and share (or fake) information.
+- **Voting**: the town votes to eliminate ("lynch") the most suspicious player. A wrong vote removes an innocent and helps the Mafia.
+
+This repeats until a win condition is met.
+
+## Win conditions
+
+- **Town wins** when all Mafia are eliminated.
+- **Mafia wins** when the number of Mafia equals the number of remaining townsfolk (they can no longer be outvoted).
+- **Neutral roles** win by their own private goal: the Maniac wins by being the last one standing; the Suicide wins only if it is lynched by the town during the day.
+
+## How many players
+
+Classic Mafia can start with 4 players, but the best games are with 8–12. A Mafia Online room holds 4 to 20 players. When there are not enough humans, smart bots fill the empty seats so a game never stalls.
+
+## The 13 roles
+
+Roles belong to three teams: Mafia, Town (Civil) and Neutral.
+
+### Mafia team
+- **Don** — the head of the Mafia. At night, with the family, chooses the victim and carries out the sentence. When the Detective investigates the Don, the Don often appears "innocent".
+- **Mafia** — a regular family member who kills with the team at night. If the Don dies, a Mafia becomes the new Don. Main job: blend into the town and shift suspicion onto others.
+
+### Town team (Civil)
+- **Detective (Komissar Katani)** — the town's main protector. At night, investigates a player's role or shoots a player.
+- **Sergeant** — knows the Detective's check results; if the Detective dies, takes over the role.
+- **Doctor** — at night, saves one player from attack; can save themselves once.
+- **Mistress** — distracts any one player for a night; that player does nothing that night and the next day.
+- **Lawyer** — picks a client; if the Detective checks that client, they appear as "Townsperson".
+- **Tramp** — wanders the town all night and sees who visited whom — a living witness.
+- **Lucky** — a lucky civilian; when attacked, has a 50% chance to survive.
+- **Kamikaze** — if lynched by the day vote, takes one more player to the grave with them.
+- **Townsperson** — no special ability, but powerful through discussion, logic and the vote.
+
+### Neutral
+- **Maniac (Killer)** — kills one player every night. Goal: eliminate everyone and win alone.
+- **Suicide** — wins only if the town lynches it during the day vote. If it dies at night, it loses.
+
+## Features of Mafia Online
+
+- **Real-time**: built on Socket.io; every message, action and vote reaches everyone instantly.
+- **Voice chat**: live in-game voice — persuade, accuse or bluff with your own voice.
+- **Video chat**: optional camera so micro-expressions come back into play, the way they do at a real table. Works directly in the browser; the camera and microphone are optional.
+- **4–20 players**: configure the room yourself; bots fill any empty seats.
+- **Telegram login**: one click, no registration; also runs inside a Telegram Mini App.
+- **Any device**: responsive design for phone, tablet and desktop.
+- **VIP profile**: an optional cosmetic upgrade (animations, gold frame, crown) bought with Telegram Stars; purely cosmetic and never affects the game's outcome.
+
+## How to start (3 steps)
+
+1. **Enter** — sign in with Telegram in one click, or start instantly as a guest.
+2. **Create or join a room** — invite friends with a link, or join an open room.
+3. **Play your role** — get your role, act at night, debate by day, and win.
+
+## Frequently asked questions
+
+- **What is Mafia Online?** A free, real-time online Mafia game played with friends in the browser and Telegram, where the town and the mafia battle through discussion, deduction and voting.
+- **Is it free?** Yes, 100% free to play. Only an optional cosmetic VIP profile is bought with Telegram Stars, and it never affects the outcome.
+- **How many people can play?** 4 to 20 per room; smart bots fill empty seats.
+- **Do I need to register?** No. Play as a guest immediately, or sign in with Telegram in one click to keep your stats and friends.
+- **Can I play on a phone?** Yes — it is responsive on phone, tablet and desktop, and opens inside the Telegram Mini App.
+- **Is a camera required?** No. Voice and video are optional; you can play with text only.
+- **Can I play with friends?** Yes — create a room and share the invite link; friends join in one click, no codes.
+- **What languages are supported?** Uzbek (primary), Russian and English.
+
+## Links
+
+- Play: https://game.mafiaonline.uz
+- Telegram bot: https://t.me/MafiaOnlaynBot
+- Telegram channel: https://t.me/MafiyaOnlaynUz
+- Landing & blog: https://mafiaonline.uz

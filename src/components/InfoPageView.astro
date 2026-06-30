@@ -1,0 +1,89 @@
+---
+// Renders a trust/info page (About, Contact, Privacy, Terms) with a self-contained
+// header + footer, reusing BlogBody for the content blocks.
+import BlogBody from "./BlogBody.astro";
+import Footer from "./Footer.astro";
+import Icon from "./Icon.astro";
+import { INFO_PAGES, type InfoKey, type InfoLang } from "../i18n/info";
+import { COPY, PLAY_URL } from "../i18n/copy";
+
+interface Props { lang: InfoLang; page: InfoKey }
+const { lang, page } = Astro.props;
+const p = INFO_PAGES[page];
+const nav = COPY[lang].nav;
+const base = lang === "ru" ? "/ru" : "";
+const homeHref = base || "/";
+const updatedLabel = lang === "ru" ? "Обновлено" : "Yangilangan";
+const otherLang: InfoLang = lang === "ru" ? "uz" : "ru";
+const otherHref = (otherLang === "ru" ? "/ru" : "") + `/${page}`;
+---
+
+<header class="bnav">
+  <div class="bnav-inner">
+    <a href={homeHref} class="bbrand" aria-label="Mafia Online">
+      <img src="/logo.png" alt="" class="bbrand-mark" width="36" height="37" />
+      <span class="bbrand-name font-display">MAFIA<span class="text-gold"> ONLINE</span></span>
+    </a>
+    <nav class="bnav-links">
+      <a href={homeHref}>{lang === "ru" ? "Главная" : "Bosh sahifa"}</a>
+      <a href={`${base}/blog`}>{nav.blog}</a>
+    </nav>
+    <div class="bnav-actions">
+      <a href={otherHref} class="blang-opt" aria-label={otherLang.toUpperCase()}>{otherLang.toUpperCase()}</a>
+      <a href={PLAY_URL} class="btn-primary bnav-play" target="_blank" rel="noopener">
+        <Icon name="play" size={15} /> <span>{nav.play}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="info">
+  <article class="info-inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={homeHref}>{lang === "ru" ? "Главная" : "Bosh sahifa"}</a>
+      <span>/</span>
+      <span>{p.title[lang]}</span>
+    </nav>
+    <h1 class="info-title font-display">{p.title[lang]}</h1>
+    <p class="info-updated">{updatedLabel}: {p.updated}</p>
+    <BlogBody blocks={p.body[lang]} lang={lang} />
+  </article>
+</main>
+
+<Footer lang={lang} />
+
+<style>
+  .bnav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .bnav-inner { max-width: var(--maxw); margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 20px; }
+  .bbrand { display: flex; align-items: center; gap: 10px; }
+  .bbrand-mark { height: 37px; width: auto; filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.45)); }
+  .bbrand-name { font-size: 1.18rem; font-weight: 800; letter-spacing: 1px; }
+  .bnav-links { display: flex; gap: 26px; margin-left: auto; }
+  .bnav-links a { color: var(--text-muted); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+  .bnav-links a:hover { color: var(--text); }
+  .bnav-actions { display: flex; align-items: center; gap: 14px; }
+  .blang-opt {
+    width: 38px; height: 38px; display: grid; place-items: center;
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 0.8rem; font-weight: 700; color: var(--text-muted); transition: all 0.2s;
+  }
+  .blang-opt:hover { color: var(--text); border-color: var(--primary); }
+  .bnav-play { padding: 10px 20px; font-size: 0.9rem; box-shadow: 0 6px 20px rgba(196, 30, 58, 0.3); }
+
+  .info { min-height: 60vh; }
+  .info-inner { max-width: 760px; margin: 0 auto; padding: 46px 24px 20px; }
+  .crumbs { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 22px; }
+  .crumbs a { color: var(--text-muted); transition: color 0.2s; }
+  .crumbs a:hover { color: var(--primary); }
+  .info-title { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 900; line-height: 1.18; color: var(--text); margin-bottom: 12px; }
+  .info-updated { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 30px; padding-bottom: 22px; border-bottom: 1px solid var(--border-light); }
+
+  @media (max-width: 600px) {
+    .bnav-links { display: none; }
+  }
+</style>

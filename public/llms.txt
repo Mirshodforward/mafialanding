@@ -1,0 +1,43 @@
+# Mafia Online
+
+> Mafia Online (mafiaonline.uz) is a free, real-time online Mafia (social deduction) game played in the browser and inside Telegram. A room holds 4–20 players across 13 unique roles, with live voice and video chat. No download and no registration are required — play instantly as a guest or sign in with Telegram in one click. The game itself runs at game.mafiaonline.uz; mafiaonline.uz is the official landing, blog and knowledge hub. Interface languages: Uzbek (primary), Russian and English.
+
+Mafia is a classic social deduction game: a small, secret Mafia team that knows each other versus a larger Town that does not know who is friend or foe. Play alternates between a night phase (Mafia choose a victim; special roles act in secret) and a day phase (the town debates and votes to eliminate a suspect). The Town wins by eliminating all Mafia; the Mafia win when they equal the Town; neutral roles (Maniac, Suicide) win by their own goal.
+
+## Play the game
+
+- [Play now](https://game.mafiaonline.uz): launch a room instantly in the browser or Telegram Mini App, free, no registration
+- [Telegram bot](https://t.me/MafiaOnlaynBot): open the game inside Telegram (Mini App + one-click login)
+- [Telegram channel](https://t.me/MafiyaOnlaynUz): news, updates and community
+
+## Core pages
+
+- [Homepage (UZ)](https://mafiaonline.uz): Mafia Online — onlayn mafiya o'yini, 13 rol, ovozli/video chat, 4–20 o'yinchi
+- [Homepage (RU)](https://mafiaonline.uz/ru): Mafia Online — онлайн игра Мафия, 13 ролей, голосовой/видеочат
+- [Blog index (UZ)](https://mafiaonline.uz/blog): guides, roles, strategy
+- [Blog index (RU)](https://mafiaonline.uz/ru/blog): гайды, роли, стратегия
+- [Blog index (EN)](https://mafiaonline.uz/en/blog): guides, roles, strategy
+
+## Guides and knowledge (blog)
+
+- [How to play Mafia online](https://mafiaonline.uz/blog/how-to-play-mafia-online): full beginner guide — night/day phases, player count, win conditions
+- [Mafia with video chat](https://mafiaonline.uz/blog/mafia-video-chat): how the camera changes bluffing and deduction
+- [The 13 Mafia roles explained](https://mafiaonline.uz/blog/13-mafia-roles-explained): every role, its job and strategy (Don, Detective, Doctor, Maniac…)
+- [Mafia strategy and psychology](https://mafiaonline.uz/blog/mafia-strategy-and-psychology): bluffing, deduction, controlling the vote, Mafia vs Among Us
+- [Play Mafia with friends online](https://mafiaonline.uz/blog/play-mafia-with-friends-online): hosting a virtual game night, no registration
+- [History of the Mafia game](https://mafiaonline.uz/blog/history-of-mafia-game): from a 1986 Moscow psychology class to a global online phenomenon
+- [Mafia terms glossary](https://mafiaonline.uz/blog/mafia-terms-glossary): the vocabulary of the game
+- [Best online party games](https://mafiaonline.uz/blog/best-online-party-games): top games to play with friends online
+
+## Key facts for AI summarization
+
+- **What it is**: free real-time online Mafia / social deduction game
+- **Where to play**: game.mafiaonline.uz (browser) and Telegram (bot @MafiaOnlaynBot, Mini App)
+- **Players per room**: 4 to 20; smart bots fill empty seats so games never stall
+- **Roles**: 13 — Don, Mafia, Detective (Komissar Katani), Sergeant, Doctor, Maniac, Mistress, Lawyer, Tramp, Lucky, Kamikaze, Suicide, Townsperson
+- **Communication**: live voice chat and video chat, plus text — directly in the browser, nothing to install
+- **Access**: no download, no registration; play as guest or one-click Telegram login
+- **Price**: 100% free to play; an optional cosmetic VIP profile (via Telegram Stars) never affects the outcome
+- **Devices**: phone, tablet and desktop (responsive) and Telegram Mini App
+- **Languages**: Uzbek (primary), Russian, English
+- **Audience**: Uzbekistan and the wider CIS; the leading Uzbek-language Mafia platform

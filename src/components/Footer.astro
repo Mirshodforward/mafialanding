@@ -36,6 +36,14 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="footer-col">
+      <h4>{t.info}</h4>
+      <a href={`${base}/about`}>{t.about}</a>
+      <a href={`${base}/contact`}>{t.contact}</a>
+      <a href={`${base}/privacy`}>{t.privacy}</a>
+      <a href={`${base}/terms`}>{t.terms}</a>
+    </div>
+
+    <div class="footer-col">
       <h4>Til / Язык</h4>
       <a href="/">O'zbekcha</a>
       <a href="/ru">Русский</a>
@@ -54,7 +62,7 @@ const year = new Date().getFullYear();
   .footer { border-top: 1px solid var(--border-light); background: var(--bg-2); padding-top: 60px; }
   .footer-inner {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
     gap: 36px;
     padding-bottom: 48px;
   }

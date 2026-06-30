@@ -17,8 +17,12 @@ const MONTHS: Record<BlogLang, string[]> = {
   ru: ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
   en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 };
-const d = new Date(post.date);
-const dateLabel = `${d.getUTCDate()} ${MONTHS[lang][d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+const fmtDate = (iso: string) => {
+  const d = new Date(iso);
+  return `${d.getUTCDate()} ${MONTHS[lang][d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+};
+const dateLabel = fmtDate(post.date);
+const updatedLabel = post.updated && post.updated !== post.date ? fmtDate(post.updated) : null;
 
 const related = POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
 ---
@@ -38,13 +42,32 @@ const related = POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
 
     <div class="post-meta">
       <span>{ui.published} {dateLabel}</span>
+      {updatedLabel && <span class="dot" aria-hidden="true"></span>}
+      {updatedLabel && <span>{ui.updated} {updatedLabel}</span>}
       <span class="dot" aria-hidden="true"></span>
       <span>{post.readMins} {ui.minRead}</span>
     </div>
 
     <p class="post-lead">{c.excerpt}</p>
 
-    <BlogBody blocks={c.body} />
+    <BlogBody blocks={c.body} lang={lang} />
+
+    {c.faq && c.faq.length > 0 && (
+      <section class="post-faq" aria-labelledby="post-faq-heading">
+        <h2 id="post-faq-heading" class="post-faq-title font-display">{ui.faqTitle}</h2>
+        <div class="post-faq-list">
+          {c.faq.map((f, i) => (
+            <details class="post-faq-item" open={i === 0}>
+              <summary>
+                <span>{f.q}</span>
+                <span class="post-faq-toggle">+</span>
+              </summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
   </article>
 
   <BlogCTA lang={lang} />
@@ -96,6 +119,46 @@ const related = POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
     margin-bottom: 30px;
     border-bottom: 1px solid var(--border-light);
   }
+
+  /* ── Per-post FAQ ── */
+  .post-faq { margin-top: 3em; }
+  .post-faq-title {
+    font-size: clamp(1.35rem, 3vw, 1.7rem);
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 20px;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent, var(--primary));
+  }
+  .post-faq-list { display: flex; flex-direction: column; gap: 12px; }
+  .post-faq-item {
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .post-faq-item[open] { border-color: color-mix(in srgb, var(--accent, var(--primary)) 40%, transparent); }
+  .post-faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-weight: 600; color: var(--text);
+  }
+  .post-faq-item summary::-webkit-details-marker { display: none; }
+  .post-faq-item summary:hover { color: var(--accent, var(--primary)); }
+  .post-faq-toggle {
+    width: 26px; height: 26px; min-width: 26px;
+    border-radius: 7px;
+    display: grid; place-items: center;
+    font-size: 1.15rem; line-height: 1;
+    color: var(--accent, var(--primary));
+    background: color-mix(in srgb, var(--accent, var(--primary)) 12%, transparent);
+    transition: transform 0.3s;
+  }
+  .post-faq-item[open] .post-faq-toggle { transform: rotate(45deg); }
+  .post-faq-item p { padding: 0 22px 20px; color: var(--text-muted); line-height: 1.75; margin: 0; }
 
   .related { padding: 50px 24px 10px; }
   .related-title { font-size: 1.5rem; font-weight: 800; text-align: center; margin-bottom: 28px; color: var(--text); }

@@ -1,0 +1,22 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import InfoPageView from "../../components/InfoPageView.astro";
+import { INFO_PAGES, infoAbs, infoHreflangs, infoSchema } from "../../i18n/info";
+
+const lang = "ru";
+const key = "privacy";
+const p = INFO_PAGES[key];
+---
+
+<Layout
+  title={`${p.title[lang]} | Mafia Online`}
+  description={p.description[lang]}
+  canonical={infoAbs(lang, key)}
+  lang={lang}
+  hreflangs={infoHreflangs(key)}
+>
+  {infoSchema(lang, key).map((s) => (
+    <script slot="head" type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+  <InfoPageView lang={lang} page={key} />
+</Layout>

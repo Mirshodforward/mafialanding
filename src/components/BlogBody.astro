@@ -1,8 +1,13 @@
 ---
 // Renders a post body (array of content blocks) as styled prose.
-import type { Block } from "../i18n/blog";
-interface Props { blocks: Block[] }
-const { blocks } = Astro.props;
+import { BLOG_UI, type Block, type BlogLang } from "../i18n/blog";
+interface Props { blocks: Block[]; lang?: BlogLang }
+const { blocks, lang = "uz" } = Astro.props;
+const ui = BLOG_UI[lang];
+
+const hostOf = (url: string) => {
+  try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return url; }
+};
 ---
 
 <div class="prose">
@@ -15,8 +20,38 @@ const { blocks } = Astro.props;
       <ul>{b.ul.map((li) => <li>{li}</li>)}</ul>
     ) : "quote" in b ? (
       <blockquote>{b.quote}</blockquote>
+    ) : "answer" in b ? (
+      <aside class="answer-box" role="note" aria-label={ui.answerLabel}>
+        <span class="answer-label">{ui.answerLabel}</span>
+        <p>{b.answer}</p>
+      </aside>
+    ) : "table" in b ? (
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>{b.table.head.map((h) => <th>{h}</th>)}</tr>
+          </thead>
+          <tbody>
+            {b.table.rows.map((row) => (
+              <tr>{row.map((cell) => <td set:html={cell} />)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : "sources" in b ? (
+      <div class="sources">
+        <div class="sources-title">{ui.sourcesLabel}</div>
+        <ul>
+          {b.sources.map((s) => (
+            <li>
+              <a href={s.url} target="_blank" rel="noopener nofollow">{s.label}</a>
+              <span class="src-host">{hostOf(s.url)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     ) : (
-      <p>{b.p}</p>
+      <p set:html={"p" in b ? b.p : ""} />
     )
   )}
 </div>
@@ -43,6 +78,8 @@ const { blocks } = Astro.props;
   }
   .prose p { color: var(--text-muted); }
   .prose strong { color: var(--text); }
+  .prose :global(a) { color: var(--accent, var(--primary)); font-weight: 600; }
+  .prose :global(a:hover) { text-decoration: underline; }
 
   .prose ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .prose li {
@@ -72,4 +109,52 @@ const { blocks } = Astro.props;
     font-style: italic;
     line-height: 1.7;
   }
+
+  /* ── Answer box (AEO "Qisqa javob") ── */
+  .answer-box {
+    margin-top: 1.6em;
+    padding: 18px 22px;
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--accent, var(--primary)) 35%, transparent);
+    background: color-mix(in srgb, var(--accent, var(--primary)) 7%, transparent);
+  }
+  .answer-box .answer-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent, var(--primary));
+    margin-bottom: 8px;
+  }
+  .answer-box p { color: var(--text); font-size: 1.05rem; line-height: 1.7; margin: 0; }
+
+  /* ── Comparison table ── */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border-light); border-radius: var(--radius-sm); }
+  .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.96rem; }
+  .table-wrap th, .table-wrap td { padding: 12px 16px; text-align: left; vertical-align: top; }
+  .table-wrap thead th {
+    background: color-mix(in srgb, var(--accent, var(--primary)) 12%, transparent);
+    color: var(--text); font-weight: 700;
+  }
+  .table-wrap tbody tr { border-top: 1px solid var(--border-light); }
+  .table-wrap tbody td { color: var(--text-muted); }
+  .table-wrap tbody td:first-child { color: var(--text); font-weight: 600; }
+
+  /* ── Sources ── */
+  .sources {
+    margin-top: 2em;
+    padding: 18px 22px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background: rgba(255, 255, 255, 0.015);
+    font-size: 0.95rem;
+  }
+  .sources-title { font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .sources ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .sources li { padding-left: 0; }
+  .sources li::before { display: none; }
+  .sources a { color: var(--accent, var(--primary)); font-weight: 600; }
+  .sources a:hover { text-decoration: underline; }
+  .src-host { color: var(--text-dim); font-size: 0.85rem; margin-left: 8px; }
 </style>
