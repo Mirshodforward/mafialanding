@@ -3,6 +3,8 @@
 // uz/ru/en versions hreflang-link cleanly. Pages read from here the same way
 // the landing components read from copy.ts.
 
+import { SEO_POSTS } from "./blog-seo-posts";
+
 export type BlogLang = "uz" | "ru" | "en";
 export const BLOG_LANGS: BlogLang[] = ["uz", "ru", "en"];
 
@@ -2281,6 +2283,8 @@ export const POSTS: BlogPost[] = [
       ],
     },
   },
+
+  ...SEO_POSTS,
 ];
 
 export const getPost = (slug: string) => POSTS.find((p) => p.slug === slug);

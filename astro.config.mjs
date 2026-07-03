@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 // Pure static marketing site — fast, fully crawlable, deploys to Vercel as-is.
@@ -8,6 +9,7 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'never',
   integrations: [
+    react(),
     sitemap({
       i18n: {
         defaultLocale: 'uz',

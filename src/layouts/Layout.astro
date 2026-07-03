@@ -1,4 +1,6 @@
 ---
+import PixelSnow from '../components/PixelSnow.jsx';
+
 interface Props {
   title: string;
   description?: string;
@@ -81,7 +83,23 @@ const {
     <slot name="head" />
   </head>
   <body>
-    <slot />
+    <PixelSnow
+      client:load
+      style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1 }}
+      flakeSize={0.005}
+      pixelResolution={500}
+      speed={2.7}
+      depthFade={20}
+      farPlane={5}
+      brightness={0.7}
+      density={0.4}
+      variant="round"
+      direction={185}
+      color="#ffffff"
+    />
+    <div class="site-content">
+      <slot />
+    </div>
 
     <script>
       // Scroll-reveal animations
@@ -113,7 +131,13 @@ const {
           if (target) {
             e.preventDefault();
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            document.querySelector('.nav-links')?.classList.remove('open');
+            document.querySelector('[data-nav]')?.classList.remove('is-open');
+            document.querySelector('.bnav')?.classList.remove('is-open');
+            document.body.classList.remove('nav-open');
+            document.getElementById('burger')?.classList.remove('is-active');
+            document.getElementById('burger')?.setAttribute('aria-expanded', 'false');
+            document.getElementById('bnavBurger')?.classList.remove('is-active');
+            document.getElementById('bnavBurger')?.setAttribute('aria-expanded', 'false');
           }
         });
       });

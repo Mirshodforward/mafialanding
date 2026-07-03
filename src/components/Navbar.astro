@@ -9,128 +9,313 @@ const altHref = lang === "ru" ? "/" : "/ru";
 const altLabel = lang === "ru" ? "UZ" : "RU";
 ---
 
-<header class="nav">
+<header class="nav" data-nav>
   <div class="nav-inner">
     <a href={base || "/"} class="brand" aria-label="Mafia Online">
       <img src="/logo.png" alt="" class="brand-mark" width="39" height="40" />
       <span class="brand-name font-display">MAFIA<span class="brand-on"> ONLINE</span></span>
     </a>
 
-    <nav class="nav-links" id="navLinks">
-      <a href="#roles">{t.roles}</a>
-      <a href="#features">{t.features}</a>
-      <a href="#how">{t.how}</a>
-      <a href="#faq">{t.faq}</a>
-      <a href={`${base}/blog`}>{t.blog}</a>
-    </nav>
+    <div class="nav-panel" id="navPanel">
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a href="#roles">{t.roles}</a>
+        <a href="#features">{t.features}</a>
+        <a href="#how">{t.how}</a>
+        <a href="#faq">{t.faq}</a>
+        <a href={`${base}/blog`}>{t.blog}</a>
+      </nav>
+      <div class="nav-mobile-foot">
+        <a href={altHref} class="lang-switch">{altLabel}</a>
+        <a href={PLAY_URL} class="btn-primary nav-play" target="_blank" rel="noopener">
+          <Icon name="play" size={15} /> {t.play}
+        </a>
+      </div>
+    </div>
 
     <div class="nav-actions">
-      <a href={altHref} class="lang-switch" aria-label={altLabel}>{altLabel}</a>
-      <a href={PLAY_URL} class="btn-primary nav-play" target="_blank" rel="noopener">
+      <a href={altHref} class="lang-switch nav-desktop-only" aria-label={altLabel}>{altLabel}</a>
+      <a href={PLAY_URL} class="btn-primary nav-play nav-desktop-only" target="_blank" rel="noopener">
         <Icon name="play" size={15} /> <span class="nav-play-label">{t.play}</span>
       </a>
-      <button class="burger" id="burger" aria-label="Menu">
+      <button
+        class="burger"
+        id="burger"
+        type="button"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="navPanel"
+      >
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
+
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 </header>
 
 <script>
+  const nav = document.querySelector<HTMLElement>("[data-nav]");
   const burger = document.getElementById("burger");
-  const links = document.getElementById("navLinks");
-  burger?.addEventListener("click", () => links?.classList.toggle("open"));
+  const panel = document.getElementById("navPanel");
+  const overlay = document.getElementById("navOverlay");
+
+  const setNavOpen = (open: boolean) => {
+    if (!nav || !burger || !panel) return;
+    nav.classList.toggle("is-open", open);
+    burger.classList.toggle("is-active", open);
+    burger.setAttribute("aria-expanded", String(open));
+    panel.setAttribute("aria-hidden", String(!open));
+    overlay?.setAttribute("aria-hidden", String(!open));
+    document.body.classList.toggle("nav-open", open);
+  };
+
+  burger?.addEventListener("click", () => setNavOpen(!nav?.classList.contains("is-open")));
+  overlay?.addEventListener("click", () => setNavOpen(false));
+
+  panel?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setNavOpen(false));
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setNavOpen(false);
+  });
+
+  window.matchMedia("(min-width: 901px)").addEventListener("change", (e) => {
+    if (e.matches) setNavOpen(false);
+  });
 </script>
 
 <style>
   .nav {
+    --nav-pad-y: 14px;
     position: fixed;
     inset: 0 0 auto 0;
-    z-index: 100;
-    padding: 16px 24px;
-    transition: background 0.3s, backdrop-filter 0.3s, padding 0.3s, border-color 0.3s;
+    z-index: 1000;
+    padding: var(--nav-pad-y) max(16px, env(safe-area-inset-right)) var(--nav-pad-y) max(16px, env(safe-area-inset-left));
+    transition: background 0.3s, backdrop-filter 0.3s, border-color 0.3s;
     border-bottom: 1px solid transparent;
   }
   .nav.scrolled {
-    background: rgba(10, 10, 15, 0.82);
+    background: rgba(10, 10, 15, 0.92);
     backdrop-filter: blur(14px);
     border-bottom-color: var(--border-light);
-    padding: 10px 24px;
+    --nav-pad-y: 10px;
   }
+
   .nav-inner {
     max-width: var(--maxw);
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
+    min-height: 40px;
+    width: 100%;
   }
-  .brand { display: flex; align-items: center; gap: 10px; }
-  .brand-mark { height: 40px; width: auto; filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.45)); }
-  .brand-name { font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .brand-mark {
+    height: 38px;
+    width: auto;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.45));
+  }
+  .brand-name {
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
   .brand-on { color: var(--gold); }
 
-  .nav-links { display: flex; gap: 28px; margin-left: auto; }
+  /* Desktop: panel is inline flex row */
+  .nav-panel {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    min-width: 0;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+  }
   .nav-links a {
     color: var(--text-muted);
     font-weight: 500;
     font-size: 0.95rem;
     transition: color 0.2s;
     position: relative;
+    white-space: nowrap;
   }
   .nav-links a:hover { color: var(--text); }
   .nav-links a::after {
     content: "";
     position: absolute;
-    left: 0; bottom: -6px;
-    width: 0; height: 2px;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
     background: var(--gradient);
     transition: width 0.25s;
   }
   .nav-links a:hover::after { width: 100%; }
 
-  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .nav-mobile-foot { display: none; }
+
   .lang-switch {
-    width: 38px; height: 38px;
-    display: grid; place-items: center;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
     border: 1px solid var(--border);
     border-radius: 10px;
-    font-size: 0.8rem; font-weight: 700;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: var(--text-muted);
     transition: all 0.2s;
   }
   .lang-switch:hover { color: var(--text); border-color: var(--primary); }
-  .nav-play { padding: 11px 22px; font-size: 0.92rem; box-shadow: 0 6px 20px rgba(196, 30, 58, 0.3); }
+  .nav-play {
+    padding: 11px 22px;
+    font-size: 0.92rem;
+    box-shadow: 0 6px 20px rgba(196, 30, 58, 0.3);
+    white-space: nowrap;
+  }
 
   .burger {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
-    background: none; border: none; cursor: pointer;
-    padding: 6px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 10px;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
   }
-  .burger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+  .burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s;
+    transform-origin: center;
+  }
+  .burger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.is-active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+  .nav-overlay { display: none; }
+
+  /* ── Mobile ── */
   @media (max-width: 900px) {
-    .nav-links {
-      position: fixed;
-      inset: 64px 0 auto 0;
-      flex-direction: column;
-      gap: 0;
-      background: rgba(10, 10, 15, 0.97);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-light);
-      padding: 8px 24px 20px;
-      transform: translateY(-12px);
-      opacity: 0; pointer-events: none;
-      transition: 0.25s;
-    }
-    .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-    .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--border-light); }
+    .nav-desktop-only { display: none !important; }
     .burger { display: flex; }
-    .nav-play span { display: none; }
+
+    .nav-inner {
+      justify-content: space-between;
+    }
+
+    .nav-panel {
+      margin-left: 0;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: calc(var(--nav-pad-y) * 2 + 40px);
+      margin: 0;
+      flex-direction: column;
+      align-items: stretch;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: max-height 0.35s ease, opacity 0.25s, visibility 0.25s;
+      background: rgba(10, 10, 15, 0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      z-index: 999;
+    }
+
+    .nav.is-open .nav-panel {
+      max-height: min(85vh, 480px);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      border-bottom-color: var(--border-light);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 8px max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
+    }
+    .nav-links a {
+      padding: 16px 4px;
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .nav-links a::after { display: none; }
+
+    .nav-mobile-foot {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px max(16px, env(safe-area-inset-left)) max(20px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-right));
+      border-top: 1px solid var(--border-light);
+    }
+    .nav-mobile-foot .nav-play {
+      flex: 1;
+      justify-content: center;
+      padding: 14px 20px;
+    }
+
+    .nav-actions {
+      margin-left: auto;
+    }
+
+    .nav-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      background: rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s, visibility 0.25s;
+    }
+    .nav.is-open .nav-overlay {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
   }
+
   @media (max-width: 480px) {
-    .nav-play { padding: 10px 16px; }
     .brand-on { display: none; }
   }
 </style>
